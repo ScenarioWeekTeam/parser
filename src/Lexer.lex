@@ -11,4 +11,4 @@ Comment = {SingleLineComment} | {MultiLineComment}
 SingleLineComment = "#" {InputCharacter}* {LineTerminator}?
 MultiLineComment  = "/#" [^#] ~"#/" | "/#" "#"+ "/"
 
-
+Identifier = [:jletter:] [:jletterdigit:]*
