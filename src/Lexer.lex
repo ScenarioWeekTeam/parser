@@ -11,6 +11,10 @@ import java_cup.runtime.*;
     private Symbol symbol(int type) {
         return new Symbol(type, yyline, yycolumn);
     }
+    
+    private Symbol symbol(int type, Object value) {
+        return new Symbol(type, yyline, yycolumn, value);
+    }
 %}
 
 LineTerminator = \r|\n|\r\n
@@ -60,12 +64,12 @@ Char = ['(A-Z|a-z|0-9|!|\"|#|$|%|&|\\'|\(|\)|\*|\+|,|\.|/|:|;|<|=|>|\?|@|\[|\\|\
 
 
 <YYINITIAL> {
-    {Identifier} { return symbol(sym.IDENTIFIER); }
-    {Char} { return symbol(sym.CHAR); }
-    {Bool} { return symbol(sym.BOOL); }
-    {Int} { return symbol(sym.INT); }
-    {Rat} { return symbol(sym.RAT); }
-    {Float} { return symbol(sym.FLOAT); }
+    {Identifier} { return symbol(sym.IDENTIFIER, yytext()); }
+    {Char} { return symbol(sym.CHAR, new Character(yytext().charAt(1))); }
+    {Bool} { return symbol(sym.BOOL, yytext()); }
+    {Int} { return symbol(sym.INT, new Integer(yytext())); }
+    {Rat} { return symbol(sym.RAT, new Rational(yytext())); }
+    {Float} { return symbol(sym.FLOAT, new Double(yytext())); }
     "null" { return symbol(sym.NULL); }
 
     {Comment} { /* Ignore */ }
