@@ -72,4 +72,19 @@ Char = ['(A-Z|a-z|0-9|!|"|#|$|%|&|'|\(|\)|\*|\+|,|\.|/|:|;|<|=|>|\?|@|\[|\\|\]|\
 
     {Comment} { /* Ignore */ }
     {Whitespace} { /* Ignore */ }
+    
+    /* Operators */
+    "!" { return symbol(sym.NOT); }
+    "&&" { return symbol(sym.AND); }
+    "\|\|" { return symbol(sym.OR); }
+    "=>" { return symbol(sym.IMPLICATION); }
+    "\+" { return symbol(sym.ADD); }
+    "-" { return symbol(sym.MINUS); }
+    "\*" { return symbol(sym.TIMES); }
+    "/" { return symbol(sym.DIVIDE); }
+    "^" { return symbol(sym.POWER); }
+    "<" { return symbol(sym.LESSTHAN); }
+    "<=" { return symbol(sym.LESSTHANEQUAL); }
+    "=" { return symbol(sym.EQUAL); }
+    "!=" { return symbol(sym.NOTEQUAL); }
 }
