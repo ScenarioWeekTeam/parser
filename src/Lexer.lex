@@ -90,4 +90,15 @@ Char = ['(A-Z|a-z|0-9|!|\"|#|$|%|&|\\'|\(|\)|\*|\+|,|\.|/|:|;|<|=|>|\?|@|\[|\\|\
     "=" { return symbol(sym.EQUAL); }
     "!=" { return symbol(sym.NOTEQUAL); }
     ":=" { return symbol(sym.ASSIGN); }
+    
+    /* Symbols */
+    "(" { return symbol(sym.LPARENS); }
+    ")" { return symbol(sym.RPARENS); }
+    ":" { return symbol(sym.COLON); }
+    "[" { return symbol(sym.LBRACKET); }
+    "]" { return symbol(sym.RBRACKET); }
+    ";" { return symbol(sym.SEMICOLON); }
+    ">" { return symbol(sym.GREATERTHAN); }
+    "," { return symbol(sym.COMMA); }
+    "?" { return symbol(sym.QUESTION); }
 }
