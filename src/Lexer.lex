@@ -89,5 +89,5 @@ Char = ['(A-Z|a-z|0-9|!|\"|#|$|%|&|\\'|\(|\)|\*|\+|,|\.|/|:|;|<|=|>|\?|@|\[|\\|\
     "<=" { return symbol(sym.LESSTHANEQUAL); }
     "=" { return symbol(sym.EQUAL); }
     "!=" { return symbol(sym.NOTEQUAL); }
-    ":=" { return symbol(sym.DECLARE); }
+    ":=" { return symbol(sym.ASSIGN); }
 }
