@@ -20,17 +20,15 @@ WhiteSpace     = {LineTerminator} | [ \t\f]
 Comment = {SingleLineComment} | {MultiLineComment}
 
 SingleLineComment = "#" {InputCharacter}* {LineTerminator}?
-MultiLineComment  = "/#" [^#] ~"#/" | "/#" "#"+ "/"
+MultiLineComment  = "/#" ~"#/"
 
 Identifier = [:jletter:] [:jletterdigit:]*
 
 Int = (-)?[0-9]*
 Rat = (-)?[0-9]*(_)?[0-9]*/[0-9]*
 Float = (-)?[0-9]*.[0-9]*
-
 Bool = (T|F)
-
-Char = ['(A-Z|a-z|0-9|!|"|#|$|%|&|'|\(|\)|\*|\+|,|\.|/|:|;|<|=|>|\?|@|\[|\\|\]|\^|_|`|{|\||}|~)']
+Char = ['(A-Z|a-z|0-9|!|\"|#|$|%|&|\\'|\(|\)|\*|\+|,|\.|/|:|;|<|=|>|\?|@|\[|\\|\]|\^|_|`|\{|\||\}|~)']
 
 %%
 
@@ -87,4 +85,5 @@ Char = ['(A-Z|a-z|0-9|!|"|#|$|%|&|'|\(|\)|\*|\+|,|\.|/|:|;|<|=|>|\?|@|\[|\\|\]|\
     "<=" { return symbol(sym.LESSTHANEQUAL); }
     "=" { return symbol(sym.EQUAL); }
     "!=" { return symbol(sym.NOTEQUAL); }
+    ":=" { return symbol(sym.DECLARE); }
 }
