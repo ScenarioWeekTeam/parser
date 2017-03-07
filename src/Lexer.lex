@@ -32,7 +32,9 @@ Int = (-)?[0-9]*
 Rat = (-)?[0-9]*(_)?[0-9]*/[0-9]*
 Float = (-)?[0-9]*.[0-9]*
 Bool = (T|F)
-Char = ['(A-Z|a-z|0-9|!|\"|#|$|%|&|\\'|\(|\)|\*|\+|,|\.|/|:|;|<|=|>|\?|@|\[|\\|\]|\^|_|`|\{|\||\}|~)']
+Char = '(A-Z|a-z|0-9|!|\"|#|$|%|&|\\'|\(|\)|\*|\+|,|\.|/|:|;|<|=|>|\?|@|\[|\\|\]|\^|_|`|\{|\||\}|\~)'
+
+%state STRING
 
 %%
 
@@ -71,6 +73,7 @@ Char = ['(A-Z|a-z|0-9|!|\"|#|$|%|&|\\'|\(|\)|\*|\+|,|\.|/|:|;|<|=|>|\?|@|\[|\\|\
     {Rat} { return symbol(sym.RAT, new Rational(yytext())); }
     {Float} { return symbol(sym.FLOAT, new Double(yytext())); }
     "null" { return symbol(sym.NULL); }
+    \" { string.setLength(0); yybegin(STRING); }
 
     {Comment} { /* Ignore */ }
     {Whitespace} { /* Ignore */ }
@@ -101,4 +104,16 @@ Char = ['(A-Z|a-z|0-9|!|\"|#|$|%|&|\\'|\(|\)|\*|\+|,|\.|/|:|;|<|=|>|\?|@|\[|\\|\
     ">" { return symbol(sym.GREATERTHAN); }
     "," { return symbol(sym.COMMA); }
     "?" { return symbol(sym.QUESTION); }
+}
+
+<STRING> {
+    \" { yybegin(YYINITIAL);
+         return symbol(sym.STRING, string.toString()); }
+    [^\n\r\"\\]+ { string.append(yytext()); }
+    \\t { string.append('\t'); }
+    \\n { string.append('\n'); }
+    
+    \\r { string.append('\r'); }
+    \\\" { string.append('\"'); }
+    \\ { string.append('\\'); }
 }
