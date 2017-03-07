@@ -9,11 +9,11 @@ import java_cup.runtime.*;
 
 %{
     StringBuffer string = new StringBuffer();
-    
+
     private Symbol symbol(int type) {
         return new Symbol(type, yyline, yycolumn);
     }
-    
+
     private Symbol symbol(int type, Object value) {
         return new Symbol(type, yyline, yycolumn, value);
     }
@@ -30,9 +30,9 @@ MultiLineComment  = "/#" ~"#/"
 
 Identifier = [:jletter:] [:jletterdigit:]*
 
-Int = (-)?[0-9]*
-Rat = (-)?[0-9]*(_)?[0-9]*\/[0-9]*
-Float = (-)?[0-9]*.[0-9]*
+Int = (-)?[0-9]+
+Rat = (-)?([0-9]+_)?[0-9]+\/[0-9]+
+Float = (-)?[0-9]+.[0-9]+
 Bool = (T|F)
 Char = '[A-Z|a-z|0-9|!|\"|#|$|%|&|\'|\(|\)|\*|\+|,|\.|/|:|;|<|=|>|\?|@|\[|\\|\]|\^|_|`|\{|\¦|\}|\~]'
 
@@ -66,7 +66,7 @@ Char = '[A-Z|a-z|0-9|!|\"|#|$|%|&|\'|\(|\)|\*|\+|,|\.|/|:|;|<|=|>|\?|@|\[|\\|\]|
     "dict" { return symbol(sym.DICT_TYPE); }
     "seq" { return symbol(sym.SEQ_TYPE); }
     "top" { return symbol(sym.TOP_TYPE); }
-    
+
     /* Literals */
     {Identifier} { return symbol(sym.IDENTIFIER, yytext()); }
     {Char} { return symbol(sym.CHAR, new Character(yytext().charAt(1))); }
@@ -79,7 +79,7 @@ Char = '[A-Z|a-z|0-9|!|\"|#|$|%|&|\'|\(|\)|\*|\+|,|\.|/|:|;|<|=|>|\?|@|\[|\\|\]|
 
     {Comment} { /* Ignore */ }
     {WhiteSpace} { /* Ignore */ }
-    
+
     /* Operators */
     "!" { return symbol(sym.NOT); }
     "&&" { return symbol(sym.AND); }
@@ -95,7 +95,7 @@ Char = '[A-Z|a-z|0-9|!|\"|#|$|%|&|\'|\(|\)|\*|\+|,|\.|/|:|;|<|=|>|\?|@|\[|\\|\]|
     "=" { return symbol(sym.EQUAL); }
     "!=" { return symbol(sym.NOTEQUAL); }
     ":=" { return symbol(sym.ASSIGN); }
-    
+
     /* Symbols */
     "(" { return symbol(sym.LPARENS); }
     ")" { return symbol(sym.RPARENS); }
@@ -114,8 +114,12 @@ Char = '[A-Z|a-z|0-9|!|\"|#|$|%|&|\'|\(|\)|\*|\+|,|\.|/|:|;|<|=|>|\?|@|\[|\\|\]|
     [^\n\r\"\\]+ { string.append(yytext()); }
     \\t { string.append('\t'); }
     \\n { string.append('\n'); }
-    
+
     \\r { string.append('\r'); }
     \\\" { string.append('\"'); }
     \\ { string.append('\\'); }
 }
+
+/* error fallback */
+[^]                              { throw new Error("Illegal character <"+
+                                                    yytext()+">"); }
