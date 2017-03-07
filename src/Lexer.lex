@@ -8,6 +8,8 @@ import java_cup.runtime.*;
 %column
 
 %{
+    StringBuffer string = new StringBuffer();
+    
     private Symbol symbol(int type) {
         return new Symbol(type, yyline, yycolumn);
     }
