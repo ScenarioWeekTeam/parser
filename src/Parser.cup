@@ -36,14 +36,19 @@ precedence right NOT;
 
 program ::= stmtlist:s
     ;
-stmtlist ::= stmtlist:s1 stmt:s
+stmtlist ::= stmtlist:s1 lcl_stmt:s
     ;
-stmt ::= IDENTIFIER:identifier ASSIGN assign:e
+glbl_stmt ::= IDENTIFIER:identifier ASSIGN assign:e
     | IDENTIFIER:identifier COLON type:t SEMICOLON
     | IDENTIFIER:identifier COLON type:t ASSIGN assign:e SEMICOLON
     | TDEF LBRACE deccllist:d RBRACE SEMICOLON
     | FDEF IDENTIFIER:identifier LPARENS decllist:p RPARENS LBRACE stmtlist:s RBRACE SEMICOLON
     | FDEF IDENTIFIER:identifier LPARENS decllist:p RPARENS LBRACE stmtlist:s RBRACE COLON type:t SEMICOLON
+    | MAIN LBRACE stmtlist:s RBRACE SEMICOLON
+    ;
+lcl_stmt ::= IDENTIFIER:identifier ASSIGN assign:e
+    | IDENTIFIER:identifier COLON type:t SEMICOLON
+    | IDENTIFIER:identifier COLON type:t ASSIGN assign:e SEMICOLON
     | READ IDENTIFIER:identifier SEMICOLON
     | PRINT expr:e SEMICOLON
     | IF LPARENS expr:e RPARENS THEN stmtlist:s FI
@@ -70,9 +75,6 @@ decllist ::= decl:d
     | decllist:d1 COMMA decl:d2
     ;
 decl ::= IDENTIFIER:identifier COLON type:t 
-    ;
-function ::= MAIN
-    | IDENTIFIER:identifier
     ;
 type ::= CHAR_TYPE
     | INT_TYPE
