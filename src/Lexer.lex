@@ -101,6 +101,8 @@ Char = '[A-Z|a-z|0-9|!|\"|#|$|%|&|\'|\(|\)|\*|\+|,|\.|/|:|;|<|=|>|\?|@|\[|\\|\]|
     /* Symbols */
     "(" { return symbol(sym.LPARENS); }
     ")" { return symbol(sym.RPARENS); }
+    "{" { return symbol(sym.LBRACE); }
+    "}" { return symbol(sym.RBRACE); }
     ":" { return symbol(sym.COLON); }
     "[" { return symbol(sym.LBRACKET); }
     "]" { return symbol(sym.RBRACKET); }
