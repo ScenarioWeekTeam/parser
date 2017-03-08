@@ -57,6 +57,7 @@ Char = '[A-Z|a-z|0-9|!|\"|#|$|%|&|\'|\(|\)|\*|\+|,|\.|/|:|;|<|=|>|\?|@|\[|\\|\]|
     "read" { return symbol(sym.READ); }
     "print" { return symbol(sym.PRINT); }
     "main" { return symbol(sym.MAIN); }
+    "return" { return symbol(sym.RETURN); }
 
     /* Types */
     "char" { return symbol(sym.CHAR_TYPE); }
