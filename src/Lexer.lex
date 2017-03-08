@@ -96,6 +96,7 @@ Char = '[A-Z|a-z|0-9|!|\"|#|$|%|&|\'|\(|\)|\*|\+|,|\.|/|:|;|<|=|>|\?|@|\[|\\|\]|
     "=" { return symbol(sym.EQUAL); }
     "!=" { return symbol(sym.NOTEQUAL); }
     ":=" { return symbol(sym.ASSIGN); }
+    "::" { return symbol(sym.CONCAT); }
 
     /* Symbols */
     "(" { return symbol(sym.LPARENS); }
