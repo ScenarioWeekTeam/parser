@@ -127,4 +127,4 @@ Char = '[A-Z|a-z|0-9|!|\"|#|$|%|&|\'|\(|\)|\*|\+|,|\.|/|:|;|<|=|>|\?|@|\[|\\|\]|
 
 /* error fallback */
 [^]                              { throw new Error("Illegal character <"+
-                                                    yytext()+">"); }
+                                                    yytext()+">"+"line"+yyline+"column"+yycolumn); }
