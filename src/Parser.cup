@@ -14,3 +14,12 @@ parser code {:
 init with {: s.init(); :};
 
 scan with {: return s.next_token(); :};
+
+terminal LOOP, POOL, IF, THEN, ELSE, FI, BREAK, FDEF, TDEF, IN, ALIAS, READ, PRINT, MAIN, CHAR_TYPE, BOOL_TYPE, INT_TYPE, RAT_TYPE, FLOAT_TYPE, DICT_TYPE, SEQ_TYPE, TOP_TYPE, NULL, NOT, AND, OR, IMPLICATION, ADD, MINUS, TIMES, DIVIDE, POWER, LESSTHAN, LESSTHANEQUAL, EQUAL, NOTEQUAL, ASSIGN, LPARENS, RPARENS, COLON, LBRACKET, RBRACKET, SEMICOLON, GREATERTHAN, COMMA, QUESTION;
+terminal Character CHAR;
+terminal Integer INT;
+terminal Rational RAT;
+terminal Double FLOAT;
+terminal String STRING;
+terminal Character BOOL;
+terminal String IDENTIFIER;
