@@ -23,3 +23,12 @@ terminal Double FLOAT;
 terminal String STRING;
 terminal Character BOOL;
 terminal String IDENTIFIER;
+
+precedence left IN;
+precedence left CONCAT;
+precedence left AND, OR, IMPLICATION;
+precedence left LESSTHAN, LESSTHANEQUAL, EQUAL, NOTEQUAL;
+precedence left ADD, MINUS;
+precedence left TIMES, DIVIDE;
+precedence left POWER;
+precedence right NOT;
