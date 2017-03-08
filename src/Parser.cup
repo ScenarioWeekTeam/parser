@@ -38,9 +38,9 @@ program ::= stmtlist:s
     ;
 stmtlist ::= stmtlist:s1 stmt:s
     ;
-stmt ::= IDENTIFIER:identifier ASSIGN expr:e
+stmt ::= IDENTIFIER:identifier ASSIGN assign:e
     | IDENTIFIER:identifier COLON type:t SEMICOLON
-    | IDENTIFIER:identifier COLON type:t ASSIGN expr:e SEMICOLON
+    | IDENTIFIER:identifier COLON type:t ASSIGN assign:e SEMICOLON
     | TDEF LBRACE deccllist:d RBRACE SEMICOLON
     | FDEF IDENTIFIER:identifier LPARENS decllist:p RPARENS LBRACE stmtlist:s RBRACE SEMICOLON
     | FDEF IDENTIFIER:identifier LPARENS decllist:p RPARENS LBRACE stmtlist:s RBRACE COLON type:t SEMICOLON
@@ -53,6 +53,18 @@ stmt ::= IDENTIFIER:identifier ASSIGN expr:e
     | BREAK SEMICOLON
     | RETURN expr:e SEMICOLON
     | RETURN SEMICOLON
+    | QUESTION expr:e1 QUESTION IDENTIFIER:function LPARENS exprlist:e2 RPARENS SEMICOLON
+    ;
+exprlist ::= expr:e
+    | exprlist:e1 COMMA expr:e2
+    ;
+assign ::= expr:e
+    | exprlist:e
+    | LBRACKET exprlist:e RBRACKET
+    | LBRACE dictlist:d RBRACE
+    ;
+dictlist ::= expr:e1 COLON expr:e2
+    | dictlist:d COMMA expr:e1 COLON expr:e2
     ;
 decllist ::= decl:d 
     | decllist:d1 COMMA decl:d2
@@ -71,3 +83,4 @@ type ::= CHAR_TYPE
     | BOOL_TYPE
     | TOP_TYPE
     | IDENTIFIER:identifier
+    ;
