@@ -39,8 +39,21 @@ program ::= stmtlist:s
 stmtlist ::= stmtlist:s1 stmt:s
     ;
 stmt ::= IDENTIFIER:identifier ASSIGN expr:e
-    | TDEF LBRACE 
-    
+    | IDENTIFIER:identifier COLON type:t SEMICOLON
+    | IDENTIFIER:identifier COLON type:t ASSIGN expr:e SEMICOLON
+    | TDEF LBRACE deccllist:d RBRACE SEMICOLON
+    | FDEF IDENTIFIER:identifier LPARENS decllist:p RPARENS LBRACE stmtlist:s RBRACE SEMICOLON
+    | FDEF IDENTIFIER:identifier LPARENS decllist:p RPARENS LBRACE stmtlist:s RBRACE COLON type:t SEMICOLON
+    | READ IDENTIFIER:identifier SEMICOLON
+    | PRINT expr:e SEMICOLON
+    | IF LPARENS expr:e RPARENS THEN stmtlist:s FI
+    | IF LPARENS expr:e RPARENS THEN stmtlist:s1 ELSE stmtlist:s2 FI
+    | LOOP stmtlist:s POOL
+    | BREAK expr:e SEMICOLON
+    | BREAK SEMICOLON
+    | RETURN expr:e SEMICOLON
+    | RETURN SEMICOLON
+    ;
 decllist ::= decl:d 
     | decllist:d1 COMMA decl:d2
     ;
@@ -53,8 +66,8 @@ type ::= CHAR_TYPE
     | INT_TYPE
     | RAT_TYPE
     | FLOAT_TYPE
-    | SEQ_TYPE
-    | DICT_TYPE
+    | SEQ_TYPE LESSTHAN type:t GREATERTHAN
+    | DICT_TYPE LESSTHAN type:t1 COMMA type:t2 GREATERTHAN
     | BOOL_TYPE
     | TOP_TYPE
     | IDENTIFIER:identifier
