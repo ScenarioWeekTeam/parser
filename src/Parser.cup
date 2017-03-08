@@ -24,6 +24,7 @@ terminal String STRING;
 terminal Character BOOL;
 terminal String IDENTIFIER;
 
+precedence nonassoc ELSE;
 precedence left IN;
 precedence left CONCAT;
 precedence left AND, OR, IMPLICATION;
@@ -32,3 +33,28 @@ precedence left ADD, MINUS;
 precedence left TIMES, DIVIDE;
 precedence left POWER;
 precedence right NOT;
+
+program ::= stmtlist:s
+    ;
+stmtlist ::= stmtlist:s1 stmt:s
+    ;
+stmt ::= IDENTIFIER:identifier ASSIGN expr:e
+    | TDEF LBRACE 
+    
+decllist ::= decl:d 
+    | decllist:d1 COMMA decl:d2
+    ;
+decl ::= IDENTIFIER:identifier COLON type:t 
+    ;
+function ::= MAIN
+    | IDENTIFIER:identifier
+    ;
+type ::= CHAR_TYPE
+    | INT_TYPE
+    | RAT_TYPE
+    | FLOAT_TYPE
+    | SEQ_TYPE
+    | DICT_TYPE
+    | BOOL_TYPE
+    | TOP_TYPE
+    | IDENTIFIER:identifier
