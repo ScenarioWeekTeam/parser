@@ -1,1 +1,5 @@
-ambiguities 
+Ambiguities
+
+Paragraph: §7
+Problem: The format for negative rationals between -1 and 0 is ambiguous. It is not clear if a negative quarter is acceptable as a negative fraction'-1/4' or is it necessary to display it as a mixed fraction with 0 as the whole number '-0_1/4'.
+Our Solution: We decided to accept negative rationals between -1 and 0 as a negative fraction without the need for displaying as a mixed fraction. This mean we accept negative rationals such as -1/4.
