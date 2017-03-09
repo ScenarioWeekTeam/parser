@@ -63,6 +63,39 @@ lcl_stmt ::= IDENTIFIER:identifier ASSIGN assign:e
 exprlist ::= expr:e
     | exprlist:e1 COMMA expr:e2
     ;
+expr ::= NOT expr:e
+    | LPARENS expr:e RPARENS
+    | expr:e1 AND expr:e2
+    | expr:e1 OR expr:e2
+    | expr:e1 IMPLICATION expr:e2
+    | expr:e1 ADD expr:e2
+    | expr:e1 MINUS expr:e2
+    | expr:e1 TIMES expr:e2
+    | expr:e1 DIVIDE expr:e2
+    | MINUS expr:e
+    | expr:e1 POWER expr:e2
+    | expr:e1 LESSTHAN expr:e2
+    | expr:e1 LESSTHANEQUAL expr:e2
+    | expr:e1 EQUAL expr:e2
+    | expr:e1 NOTEQUAL expr:e2
+    | expr:e1 CONCAT expr:e2
+    | NULL
+    | BOOL:b
+    | IDENTIFIER:i LBRACKET slice RBRACKET
+    | IDENTIFIER:i
+    | CHAR:c
+    | FLOAT:f
+    | RAT:r
+    | INT:i
+    | STRING:s
+    | expr:e1 IN expr:e2
+    | QUESTION expr:e1 QUESTION IDENTIFIER:function LPARENS exprlist:e2 RPARENS
+    ;
+slice ::= expr:e1 COLON expr:e2
+    | COLON expr:e2
+    | COLON
+    | expr:e1 COLON
+    ;
 assign ::= expr:e
     | exprlist:e
     | LBRACKET exprlist:e RBRACKET
