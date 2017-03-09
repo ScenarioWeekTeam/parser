@@ -51,6 +51,7 @@ glbl_stmtlist ::= glbl_stmt:s
 glbl_stmt ::= IDENTIFIER:identifier ASSIGN assign:e
     | IDENTIFIER:identifier COLON type:t SEMICOLON
     | IDENTIFIER:identifier COLON type:t ASSIGN assign:e SEMICOLON
+    | IDENTIFIER:i1 DOT IDENTIFIER:i2 ASSIGN assign:e
     | TDEF IDENTIFIER:t LBRACE decllist:d RBRACE SEMICOLON
     | FDEF IDENTIFIER:identifier LPARENS decllist:p RPARENS LBRACE stmtlist:s RBRACE SEMICOLON
     | FDEF IDENTIFIER:identifier LPARENS decllist:p RPARENS LBRACE stmtlist:s RBRACE COLON type:t SEMICOLON
