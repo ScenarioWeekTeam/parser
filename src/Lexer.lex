@@ -111,6 +111,7 @@ Char = '[A-Z|a-z|0-9|!|\"|#|$|%|&|\'|\(|\)|\*|\+|,|\.|/|:|;|<|=|>|\?|@|\[|\\|\]|
     ">" { return symbol(sym.GREATERTHAN); }
     "," { return symbol(sym.COMMA); }
     "?" { return symbol(sym.QUESTION); }
+    "." { return symbol(sym.DOT); }
 }
 
 <STRING> {
