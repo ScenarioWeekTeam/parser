@@ -92,13 +92,13 @@ expr ::= NOT expr:e
     | expr:e1 MINUS expr:e2
     | expr:e1 TIMES expr:e2
     | expr:e1 DIVIDE expr:e2
-    | MINUS expr:e
     | expr:e1 POWER expr:e2
     | expr:e1 LESSTHAN expr:e2
     | expr:e1 LESSTHANEQUAL expr:e2
     | expr:e1 EQUAL expr:e2
     | expr:e1 NOTEQUAL expr:e2
     | expr:e1 CONCAT expr:e2
+    | MINUS expr:e
     | NULL
     | TRUE
     | FALSE
