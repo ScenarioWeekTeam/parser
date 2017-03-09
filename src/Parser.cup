@@ -56,7 +56,7 @@ glbl_stmt ::= IDENTIFIER:identifier ASSIGN assign:e
     | FDEF IDENTIFIER:identifier LPARENS decllist:p RPARENS LBRACE stmtlist:s RBRACE COLON type:t SEMICOLON
     | ALIAS type:t1 IDENTIFIER:t2
     ;
-lcl_stmt ::= IDENTIFIER:identifier ASSIGN assign:e
+lcl_stmt ::= IDENTIFIER:identifier ASSIGN assign:e SEMICOLON
     | IDENTIFIER:identifier COLON type:t SEMICOLON
     | IDENTIFIER:identifier COLON type:t ASSIGN assign:e SEMICOLON
     | READ IDENTIFIER:identifier SEMICOLON
@@ -92,6 +92,7 @@ expr ::= NOT expr:e
     | NULL
     | BOOL:b
     | IDENTIFIER:i LBRACKET slice RBRACKET
+    | IDENTIFIER:i1 LBRACKET IDENTIFIER:i2 RBRACKET
     | IDENTIFIER:i
     | CHAR:c
     | FLOAT:f
