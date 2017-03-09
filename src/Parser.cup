@@ -101,6 +101,7 @@ expr ::= NOT expr:e
     | RAT:r
     | INT:i
     | STRING:s
+    | LBRACKET exprlist:e RBRACKET
     | expr:e1 IN expr:e2
     | QUESTION expr:e1 QUESTION IDENTIFIER:function LPARENS exprlist:e2 RPARENS
     | IDENTIFIER:i1 DOT IDENTIFIER:i2
@@ -111,7 +112,6 @@ slice ::= expr:e1 COLON expr:e2
     | expr:e1 COLON
     ;
 assign ::= exprlist:e
-    | LBRACKET exprlist:e RBRACKET
     | LBRACE dictlist:d RBRACE
     | LBRACE RBRACE
     ;
