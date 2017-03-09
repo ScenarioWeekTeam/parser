@@ -8,7 +8,7 @@ parser code {:
     public void syntax_error(Symbol current_token) {
         report_error(
             "Syntax error at line " + (current_token.left+1) + ", column "
-            + current_token.right, null
+            + current_token.right + "\n", null
         );
         syntaxErrors = true;
     }
@@ -34,7 +34,8 @@ precedence left ADD, MINUS;
 precedence left TIMES, DIVIDE;
 precedence left POWER;
 precedence right NOT;
-precedence left DOT;
+precedence left LPARENS, RPARENS;
+precedence left DOT, QUESTION;
 
 program ::= main:m glbl_stmtlist:s
     | glbl_stmtlist:s1 main:m glbl_stmtlist:s2
