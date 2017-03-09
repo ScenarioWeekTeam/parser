@@ -106,6 +106,7 @@ assign ::= expr:e
     | exprlist:e
     | LBRACKET exprlist:e RBRACKET
     | LBRACE dictlist:d RBRACE
+    | LBRACE RBRACE
     ;
 dictlist ::= expr:e1 COLON expr:e2
     | dictlist:d COMMA expr:e1 COLON expr:e2
