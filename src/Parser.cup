@@ -27,7 +27,7 @@ non terminal program, main, stmtlist, glbl_stmtlist, lcl_stmt, glbl_stmt, exprli
 
 precedence nonassoc ELSE;
 precedence left IN;
-precedence left CONCAT;
+precedence right CONCAT;
 precedence left AND, OR, IMPLICATION;
 precedence left LESSTHAN, LESSTHANEQUAL, EQUAL, NOTEQUAL;
 precedence left ADD, MINUS;
@@ -63,6 +63,7 @@ glbl_stmt ::= IDENTIFIER:identifier ASSIGN assign:e SEMICOLON
 lcl_stmt ::= IDENTIFIER:identifier ASSIGN assign:e SEMICOLON
     | IDENTIFIER:identifier COLON type:t SEMICOLON
     | IDENTIFIER:identifier COLON type:t ASSIGN assign:e SEMICOLON
+    | IDENTIFIER:i1 DOT IDENTIFIER:i2 ASSIGN assign:e SEMICOLON
     | READ IDENTIFIER:identifier SEMICOLON
     | PRINT expr:e SEMICOLON
     | IF LPARENS expr:e RPARENS THEN stmtlist:s FI
