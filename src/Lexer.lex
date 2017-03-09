@@ -34,7 +34,6 @@ Identifier = [:jletter:] [:jletterdigit:]*
 Int = (-)?[0-9]+
 Rat = (-)?([0-9]+_)?[0-9]+\/[0-9]+
 Float = (-)?[0-9]+"."[0-9]+
-Bool = "T"|"F"
 Char = '[A-Z|a-z|0-9|!|\"|#|$|%|&|\'|\(|\)|\*|\+|,|\.|/|:|;|<|=|>|\?|@|\[|\\|\]|\^|_|`|\{|\¦|\}|\~]'
 
 %state STRING
@@ -71,7 +70,8 @@ Char = '[A-Z|a-z|0-9|!|\"|#|$|%|&|\'|\(|\)|\*|\+|,|\.|/|:|;|<|=|>|\?|@|\[|\\|\]|
 
     /* Literals */
     "null" { return symbol(sym.NULL); }
-    {Bool} { return symbol(sym.BOOL, new Character(yytext().charAt(0))); }
+    "T" { return symbol(sym.TRUE); }
+    "F" { return symbol(sym.FALSE); }
     {Identifier} { return symbol(sym.IDENTIFIER, yytext()); }
     {Char} { return symbol(sym.CHAR, new Character(yytext().charAt(1))); }
     {Float} { return symbol(sym.FLOAT, new Double(yytext())); }

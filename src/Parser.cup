@@ -14,13 +14,12 @@ parser code {:
     }
 :}
 
-terminal LOOP, POOL, IF, THEN, ELSE, FI, BREAK, FDEF, TDEF, IN, ALIAS, READ, PRINT, MAIN, CHAR_TYPE, BOOL_TYPE, INT_TYPE, RAT_TYPE, FLOAT_TYPE, DICT_TYPE, SEQ_TYPE, TOP_TYPE, NULL, NOT, AND, OR, IMPLICATION, ADD, MINUS, TIMES, DIVIDE, POWER, LESSTHAN, LESSTHANEQUAL, EQUAL, NOTEQUAL, ASSIGN, LPARENS, RPARENS, COLON, LBRACKET, RBRACKET, SEMICOLON, GREATERTHAN, COMMA, QUESTION, CONCAT, LBRACE, RBRACE, RETURN, DOT;
+terminal LOOP, POOL, IF, THEN, ELSE, FI, BREAK, FDEF, TDEF, IN, ALIAS, READ, PRINT, MAIN, CHAR_TYPE, BOOL_TYPE, INT_TYPE, RAT_TYPE, FLOAT_TYPE, DICT_TYPE, SEQ_TYPE, TOP_TYPE, NULL, NOT, AND, OR, IMPLICATION, ADD, MINUS, TIMES, DIVIDE, POWER, LESSTHAN, LESSTHANEQUAL, EQUAL, NOTEQUAL, ASSIGN, LPARENS, RPARENS, COLON, LBRACKET, RBRACKET, SEMICOLON, GREATERTHAN, COMMA, QUESTION, CONCAT, LBRACE, RBRACE, RETURN, DOT, TRUE, FALSE;
 terminal Character CHAR;
 terminal Integer INT;
 terminal String RAT;
 terminal Double FLOAT;
 terminal String STRING;
-terminal Character BOOL;
 terminal String IDENTIFIER;
 
 non terminal program, main, stmtlist, glbl_stmtlist, lcl_stmt, glbl_stmt, exprlist, expr, slice, assign, dictlist, decllist, decl, type;
@@ -34,8 +33,10 @@ precedence left ADD, MINUS;
 precedence left TIMES, DIVIDE;
 precedence left POWER;
 precedence right NOT;
-precedence left LPARENS, RPARENS;
+precedence left LPARENS, RPARENS, LBRACKET, RBRACKET;
 precedence left DOT, QUESTION;
+
+start with program;
 
 program ::= main:m glbl_stmtlist:s
     | glbl_stmtlist:s1 main:m glbl_stmtlist:s2
@@ -99,7 +100,8 @@ expr ::= NOT expr:e
     | expr:e1 NOTEQUAL expr:e2
     | expr:e1 CONCAT expr:e2
     | NULL
-    | BOOL:b
+    | TRUE
+    | FALSE
     | IDENTIFIER:i LBRACKET slice RBRACKET
     | IDENTIFIER:i1 LBRACKET IDENTIFIER:i2 RBRACKET
     | IDENTIFIER:i
