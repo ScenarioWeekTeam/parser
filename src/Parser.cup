@@ -34,6 +34,7 @@ precedence left ADD, MINUS;
 precedence left TIMES, DIVIDE;
 precedence left POWER;
 precedence right NOT;
+precedence left DOT;
 
 program ::= main:m glbl_stmtlist:s
     | glbl_stmtlist:s1 main:m glbl_stmtlist:s2
@@ -103,6 +104,7 @@ expr ::= NOT expr:e
     | INT:i
     | STRING:s
     | LBRACKET exprlist:e RBRACKET
+    | LBRACKET RBRACKET
     | expr:e1 IN expr:e2
     | QUESTION expr:e1 QUESTION IDENTIFIER:function LPARENS exprlist:e2 RPARENS
     | IDENTIFIER:i1 DOT IDENTIFIER:i2
