@@ -49,16 +49,16 @@ stmtlist ::= lcl_stmt:s
 glbl_stmtlist ::= glbl_stmt:s
     | glbl_stmtlist:s1 glbl_stmt:s2
     ;
-glbl_stmt ::= IDENTIFIER:identifier ASSIGN assign:e
+glbl_stmt ::= IDENTIFIER:identifier ASSIGN assign:e SEMICOLON
     | IDENTIFIER:identifier COLON type:t SEMICOLON
     | IDENTIFIER:identifier COLON type:t ASSIGN assign:e SEMICOLON
-    | IDENTIFIER:i1 DOT IDENTIFIER:i2 ASSIGN assign:e
+    | IDENTIFIER:i1 DOT IDENTIFIER:i2 ASSIGN assign:e SEMICOLON
     | TDEF IDENTIFIER:t LBRACE decllist:d RBRACE SEMICOLON
     | FDEF IDENTIFIER:identifier LPARENS decllist:p RPARENS LBRACE stmtlist:s RBRACE SEMICOLON
     | FDEF IDENTIFIER:identifier LPARENS decllist:p RPARENS LBRACE stmtlist:s RBRACE COLON type:t SEMICOLON
     | FDEF IDENTIFIER:identifier LPARENS RPARENS LBRACE stmtlist:s RBRACE SEMICOLON
     | FDEF IDENTIFIER:identifier LPARENS RPARENS LBRACE stmtlist:s RBRACE COLON type:t SEMICOLON
-    | ALIAS type:t1 IDENTIFIER:t2
+    | ALIAS type:t1 IDENTIFIER:t2 SEMICOLON
     ;
 lcl_stmt ::= IDENTIFIER:identifier ASSIGN assign:e SEMICOLON
     | IDENTIFIER:identifier COLON type:t SEMICOLON
@@ -74,7 +74,7 @@ lcl_stmt ::= IDENTIFIER:identifier ASSIGN assign:e SEMICOLON
     | RETURN SEMICOLON
     | QUESTION expr:e1 QUESTION IDENTIFIER:function LPARENS exprlist:e2 RPARENS SEMICOLON
     | TDEF IDENTIFIER:t LBRACE decllist:d RBRACE SEMICOLON
-    | ALIAS type:t1 IDENTIFIER:t2
+    | ALIAS type:t1 IDENTIFIER:t2 SEMICOLON
     ;
 exprlist ::= expr:e
     | exprlist:e1 COMMA expr:e2
