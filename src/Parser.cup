@@ -54,6 +54,8 @@ glbl_stmt ::= IDENTIFIER:identifier ASSIGN assign:e
     | TDEF LBRACE decllist:d RBRACE SEMICOLON
     | FDEF IDENTIFIER:identifier LPARENS decllist:p RPARENS LBRACE stmtlist:s RBRACE SEMICOLON
     | FDEF IDENTIFIER:identifier LPARENS decllist:p RPARENS LBRACE stmtlist:s RBRACE COLON type:t SEMICOLON
+    | FDEF IDENTIFIER:identifier LPARENS decllist:p RPARENS LBRACE RBRACE SEMICOLON
+    | FDEF IDENTIFIER:identifier LPARENS decllist:p RPARENS LBRACE RBRACE COLON type:t SEMICOLON
     | ALIAS type:t1 IDENTIFIER:t2
     ;
 lcl_stmt ::= IDENTIFIER:identifier ASSIGN assign:e SEMICOLON
