@@ -23,7 +23,7 @@ terminal String STRING;
 terminal Character BOOL;
 terminal String IDENTIFIER;
 
-non terminal program, main, stmtlist, glbl_stmtlist, lcl_stmt, glbl_stmt, exprlist, expr, slice, assign, dictlist, decllist, decl, type;
+non terminal program, main, stmtlist, glbl_stmtlist, lcl_stmt, glbl_stmt, maybe_returntype, exprlist, maybe_exprlist, expr, maybe_expr, slice, assign, dictlist, decllist, decl, type;
 
 precedence nonassoc ELSE;
 precedence left IN;
@@ -37,10 +37,7 @@ precedence right NOT;
 precedence left LPARENS, RPARENS;
 precedence left DOT, QUESTION;
 
-program ::= main:m glbl_stmtlist:s
-    | glbl_stmtlist:s1 main:m glbl_stmtlist:s2
-    | glbl_stmtlist:s main:m
-    | main:m
+program ::= glbl_stmtlist:s1 main:m glbl_stmtlist:s2
     ;
 main ::= MAIN LBRACE stmtlist:s RBRACE SEMICOLON
     ;
@@ -55,11 +52,13 @@ glbl_stmt ::= IDENTIFIER:identifier ASSIGN assign:e SEMICOLON
     | IDENTIFIER:identifier COLON type:t ASSIGN assign:e SEMICOLON
     | IDENTIFIER:i1 DOT IDENTIFIER:i2 ASSIGN assign:e SEMICOLON
     | TDEF IDENTIFIER:t LBRACE decllist:d RBRACE SEMICOLON
-    | FDEF IDENTIFIER:identifier LPARENS decllist:p RPARENS LBRACE stmtlist:s RBRACE SEMICOLON
-    | FDEF IDENTIFIER:identifier LPARENS decllist:p RPARENS LBRACE stmtlist:s RBRACE COLON type:t SEMICOLON
-    | FDEF IDENTIFIER:identifier LPARENS RPARENS LBRACE stmtlist:s RBRACE SEMICOLON
-    | FDEF IDENTIFIER:identifier LPARENS RPARENS LBRACE stmtlist:s RBRACE COLON type:t SEMICOLON
+    | FDEF IDENTIFIER:identifier LPARENS decllist:p RPARENS LBRACE stmtlist:s RBRACE maybe_returntype:r SEMICOLON
+    | FDEF IDENTIFIER:identifier LPARENS RPARENS LBRACE stmtlist:s RBRACE maybe_returntype:r SEMICOLON
     | ALIAS type:t1 IDENTIFIER:t2 SEMICOLON
+    | empty
+    ;
+maybe_returntype :: COLON type:t
+    | empty
     ;
 lcl_stmt ::= IDENTIFIER:identifier ASSIGN assign:e SEMICOLON
     | IDENTIFIER:identifier COLON type:t SEMICOLON
@@ -70,17 +69,17 @@ lcl_stmt ::= IDENTIFIER:identifier ASSIGN assign:e SEMICOLON
     | IF LPARENS expr:e RPARENS THEN stmtlist:s FI
     | IF LPARENS expr:e RPARENS THEN stmtlist:s1 ELSE stmtlist:s2 FI
     | LOOP stmtlist:s POOL
-    | BREAK expr:e SEMICOLON
-    | BREAK SEMICOLON
-    | RETURN expr:e SEMICOLON
-    | RETURN SEMICOLON
-    | QUESTION expr:e1 QUESTION IDENTIFIER:function LPARENS exprlist:e2 RPARENS SEMICOLON
-    | QUESTION expr:e1 QUESTION IDENTIFIER:function LPARENS RPARENS SEMICOLON
+    | BREAK maybe_expr:e SEMICOLON
+    | RETURN maybe_expr:e SEMICOLON
+    | QUESTION expr:e QUESTION IDENTIFIER:f LPARENS maybe_exprlist:elist RPARENS SEMICOLON
     | TDEF IDENTIFIER:t LBRACE decllist:d RBRACE SEMICOLON
     | ALIAS type:t1 IDENTIFIER:t2 SEMICOLON
     ;
 exprlist ::= expr:e
     | exprlist:e1 COMMA expr:e2
+    ;
+maybe_exprlist ::= exprlist:elist
+    | empty
     ;
 expr ::= NOT expr:e
     | LPARENS expr:e RPARENS
@@ -88,10 +87,9 @@ expr ::= NOT expr:e
     | expr:e1 OR expr:e2
     | expr:e1 IMPLICATION expr:e2
     | expr:e1 ADD expr:e2
-    | expr:e1 MINUS expr:e2
+    | maybe_expr:e1 MINUS expr:e2
     | expr:e1 TIMES expr:e2
     | expr:e1 DIVIDE expr:e2
-    | MINUS expr:e
     | expr:e1 POWER expr:e2
     | expr:e1 LESSTHAN expr:e2
     | expr:e1 LESSTHANEQUAL expr:e2
@@ -108,13 +106,14 @@ expr ::= NOT expr:e
     | RAT:r
     | INT:i
     | STRING:s
-    | LBRACKET exprlist:e RBRACKET
-    | LBRACKET RBRACKET
+    | LBRACKET maybe_exprlist:elist RBRACKET
     | expr:e1 IN expr:e2
-    | QUESTION expr:e1 QUESTION IDENTIFIER:f LPARENS exprlist:e2 RPARENS
-    | QUESTION expr:e1 QUESTION IDENTIFIER:f LPARENS RPARENS
+    | QUESTION expr:e QUESTION IDENTIFIER:f LPARENS maybe_exprlist:elist RPARENS
     | IDENTIFIER:i1 DOT IDENTIFIER:i2
     ;
+maybe_expr ::= expr:e1
+	| empty
+	;
 slice ::= expr:e1 COLON expr:e2
     | COLON expr:e2
     | COLON
