@@ -30,6 +30,8 @@ terminal String STRING;
 terminal Character BOOL;
 terminal String IDENTIFIER;
 
+non terminal program, main, stmtlist, glbl_stmtlist, lcl_stmt, glbl_stmt, exprlist, expr, slice, assign, dictlist, decllist, decl, type;
+
 precedence nonassoc ELSE;
 precedence left IN;
 precedence left CONCAT;
@@ -40,9 +42,16 @@ precedence left TIMES, DIVIDE;
 precedence left POWER;
 precedence right NOT;
 
-program ::= stmtlist:s
+program ::= main:m glbl_stmtlist:s
+    | glbl_stmtlist:s1 main:m glbl_stmtlist:s2
+    | glbl_stmtlist:s main:m
+    ;
+main ::= MAIN LBRACE stmtlist:s RBRACE SEMICOLON
     ;
 stmtlist ::= stmtlist:s1 lcl_stmt:s
+    ;
+glbl_stmtlist ::= glbl_stmt:s
+    | glbl_stmtlist:s1 glbl_stmt:s2
     ;
 glbl_stmt ::= IDENTIFIER:identifier ASSIGN assign:e
     | IDENTIFIER:identifier COLON type:t SEMICOLON
