@@ -75,7 +75,7 @@ Char = '[A-Z|a-z|0-9|!|\"|#|$|%|&|\'|\(|\)|\*|\+|,|\.|/|:|;|<|=|>|\?|@|\[|\\|\]|
     {Identifier} { return symbol(sym.IDENTIFIER, yytext()); }
     {Char} { return symbol(sym.CHAR, new Character(yytext().charAt(1))); }
     {Float} { return symbol(sym.FLOAT, new Double(yytext())); }
-    {Rat} { return symbol(sym.RAT, new Rational(yytext())); }
+    {Rat} { return symbol(sym.RAT, yytext()); }
     {Int} { return symbol(sym.INT, new Integer(yytext())); }
     \" { string.setLength(0); yybegin(STRING); }
 

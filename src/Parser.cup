@@ -2,29 +2,22 @@
 import java_cup.runtime.*;
 
 parser code {:
-
-    scanner s;
     
-    Parser(scanner s) {
-        this.s = s;
-    }
+    public boolean syntaxErrors = false;
     
     public void syntax_error(Symbol current_token) {
         report_error(
             "Syntax error at line " + (current_token.left+1) + ", column "
             + current_token.right, null
         );
+        syntaxErrors = true;
     }
 :}
-
-init with {: s.init(); :};
-
-scan with {: return s.next_token(); :};
 
 terminal LOOP, POOL, IF, THEN, ELSE, FI, BREAK, FDEF, TDEF, IN, ALIAS, READ, PRINT, MAIN, CHAR_TYPE, BOOL_TYPE, INT_TYPE, RAT_TYPE, FLOAT_TYPE, DICT_TYPE, SEQ_TYPE, TOP_TYPE, NULL, NOT, AND, OR, IMPLICATION, ADD, MINUS, TIMES, DIVIDE, POWER, LESSTHAN, LESSTHANEQUAL, EQUAL, NOTEQUAL, ASSIGN, LPARENS, RPARENS, COLON, LBRACKET, RBRACKET, SEMICOLON, GREATERTHAN, COMMA, QUESTION, CONCAT, LBRACE, RBRACE, RETURN;
 terminal Character CHAR;
 terminal Integer INT;
-terminal Rational RAT;
+terminal String RAT;
 terminal Double FLOAT;
 terminal String STRING;
 terminal Character BOOL;
@@ -45,10 +38,12 @@ precedence right NOT;
 program ::= main:m glbl_stmtlist:s
     | glbl_stmtlist:s1 main:m glbl_stmtlist:s2
     | glbl_stmtlist:s main:m
+    | main:m
     ;
 main ::= MAIN LBRACE stmtlist:s RBRACE SEMICOLON
     ;
-stmtlist ::= stmtlist:s1 lcl_stmt:s
+stmtlist ::= lcl_stmt:s
+    | stmtlist:s1 lcl_stmt:s2
     ;
 glbl_stmtlist ::= glbl_stmt:s
     | glbl_stmtlist:s1 glbl_stmt:s2
@@ -111,8 +106,7 @@ slice ::= expr:e1 COLON expr:e2
     | COLON
     | expr:e1 COLON
     ;
-assign ::= expr:e
-    | exprlist:e
+assign ::= exprlist:e
     | LBRACKET exprlist:e RBRACKET
     | LBRACE dictlist:d RBRACE
     | LBRACE RBRACE
