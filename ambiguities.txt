@@ -1,13 +1,21 @@
-Ambiguities
+﻿Ambiguities
 
 Paragraph: §7
-Problem: The format for negative rationals between -1 and 0 is ambiguous. It is not clear if a negative quarter is acceptable as a negative fraction'-1/4' or is it necessary to display it as a mixed fraction with 0 as the whole number '-0_1/4'.
-Our Solution: We decided to accept negative rationals between -1 and 0 as a negative fraction without the need for displaying as a mixed fraction. This mean we accept negative rationals such as -1/4.
+Problem: The format for negative mixed rationals is ambiguous. It is not clear from the given examples if a negative quarter is acceptable as a negative fraction '-1/4' or is it necessary to display it as a mixed fraction with 0 as the whole number '-0_1/4'.
+Our Solution: We decided to accept these negative non-mixed fractions such as '-1/4'.
 
 Paragraph: §7
-Problem: Its not clear if for negative rationals less than -1, a minus sign can precede both the whole number and fraction. E.g. "-345_-6/5".
-Our Solution: In normal mathematics, this is not accepted so our compiler rejects this syntax.
+Problem: It is not clear if a minus sign can precede the fraction. E.g. '-345_-6/5'.
+Our Solution: In standard mathematical notation, the fraction and numbers' sign cannot be seperate without being regarded as seperate numbers placed together via addition - so our compiler rejects this syntax.
+
+Paragraph: §10, 11
+Problem: Considering paragraph §9, which specifically states that zero length lists are allowed - how does this interact with the limitation on indexes to be within the the range of its length (positive to negative)?
+Our Solution: N/A - Considering CUP parsing alone cannot detect this failure of array indexing being out of bounds, this ambiguity is beyond our scope to resolve.
 
 Paragraph: §11
-Problem: It is not clear if both indices can be omitted for a sequence slice [:].
+Problem: It is not clear if both indices can be omitted for a sequence slice '[:]'.
 Our Solution: As it is supported in other languages, our compiler will accept this syntax.
+
+Paragraph: §13
+Problem: It is ambiuous whether an empty declaration_list when using 'tdef' is allowed.
+Our Solution: Considering that a type definition with no fields has no functional purpose, our compiler rejects an empty declaration_list.
