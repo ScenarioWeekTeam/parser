@@ -73,6 +73,8 @@ lcl_stmt ::= IDENTIFIER:identifier ASSIGN assign:e SEMICOLON
     | RETURN expr:e SEMICOLON
     | RETURN SEMICOLON
     | QUESTION expr:e1 QUESTION IDENTIFIER:function LPARENS exprlist:e2 RPARENS SEMICOLON
+    | TDEF IDENTIFIER:t LBRACE decllist:d RBRACE SEMICOLON
+    | ALIAS type:t1 IDENTIFIER:t2
     ;
 exprlist ::= expr:e
     | exprlist:e1 COMMA expr:e2
