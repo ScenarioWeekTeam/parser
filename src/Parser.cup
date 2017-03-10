@@ -22,7 +22,7 @@ terminal Double FLOAT;
 terminal String STRING;
 terminal String IDENTIFIER;
 
-non terminal program, main, stmtlist, glbl_stmtlist, lcl_stmt, glbl_stmt, exprlist, expr, slice, assign, dictlist, decllist, decl, type;
+non terminal program, main, stmtlist, glbl_stmtlist, lcl_stmt, glbl_stmt, exprlist, expr, slice, dictlist, decllist, decl, type;
 
 precedence nonassoc ELSE;
 precedence left IN;
@@ -51,10 +51,10 @@ stmtlist ::= lcl_stmt:s
 glbl_stmtlist ::= glbl_stmt:s
     | glbl_stmtlist:s1 glbl_stmt:s2
     ;
-glbl_stmt ::= IDENTIFIER:identifier ASSIGN assign:e SEMICOLON
+glbl_stmt ::= IDENTIFIER:identifier ASSIGN exprlist:e SEMICOLON
     | IDENTIFIER:identifier COLON type:t SEMICOLON
-    | IDENTIFIER:identifier COLON type:t ASSIGN assign:e SEMICOLON
-    | IDENTIFIER:i1 DOT IDENTIFIER:i2 ASSIGN assign:e SEMICOLON
+    | IDENTIFIER:identifier COLON type:t ASSIGN exprlist:e SEMICOLON
+    | IDENTIFIER:i1 DOT IDENTIFIER:i2 ASSIGN exprlist:e SEMICOLON
     | TDEF IDENTIFIER:t LBRACE decllist:d RBRACE SEMICOLON
     | FDEF IDENTIFIER:identifier LPARENS decllist:p RPARENS LBRACE stmtlist:s RBRACE SEMICOLON
     | FDEF IDENTIFIER:identifier LPARENS decllist:p RPARENS LBRACE stmtlist:s RBRACE COLON type:t SEMICOLON
@@ -62,10 +62,10 @@ glbl_stmt ::= IDENTIFIER:identifier ASSIGN assign:e SEMICOLON
     | FDEF IDENTIFIER:identifier LPARENS RPARENS LBRACE stmtlist:s RBRACE COLON type:t SEMICOLON
     | ALIAS type:t1 IDENTIFIER:t2 SEMICOLON
     ;
-lcl_stmt ::= IDENTIFIER:identifier ASSIGN assign:e SEMICOLON
+lcl_stmt ::= IDENTIFIER:identifier ASSIGN exprlist:e SEMICOLON
     | IDENTIFIER:identifier COLON type:t SEMICOLON
-    | IDENTIFIER:identifier COLON type:t ASSIGN assign:e SEMICOLON
-    | IDENTIFIER:i1 DOT IDENTIFIER:i2 ASSIGN assign:e SEMICOLON
+    | IDENTIFIER:identifier COLON type:t ASSIGN exprlist:e SEMICOLON
+    | IDENTIFIER:i1 DOT IDENTIFIER:i2 ASSIGN exprlist:e SEMICOLON
     | READ IDENTIFIER:identifier SEMICOLON
     | PRINT expr:e SEMICOLON
     | IF LPARENS expr:e RPARENS THEN stmtlist:s FI
@@ -112,19 +112,17 @@ expr ::= NOT expr:e
     | STRING:s
     | LBRACKET exprlist:e RBRACKET
     | LBRACKET RBRACKET
+    | LBRACE RBRACE
     | expr:e1 IN expr:e2
     | QUESTION expr:e1 QUESTION IDENTIFIER:f LPARENS exprlist:e2 RPARENS
     | QUESTION expr:e1 QUESTION IDENTIFIER:f LPARENS RPARENS
     | IDENTIFIER:i1 DOT IDENTIFIER:i2
+    | LBRACE dictlist:d RBRACE
     ;
 slice ::= expr:e1 COLON expr:e2
     | COLON expr:e2
     | COLON
     | expr:e1 COLON
-    ;
-assign ::= exprlist:e
-    | LBRACE dictlist:d RBRACE
-    | LBRACE RBRACE
     ;
 dictlist ::= expr:e1 COLON expr:e2
     | dictlist:d COMMA expr:e1 COLON expr:e2
