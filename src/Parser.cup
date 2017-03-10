@@ -22,7 +22,7 @@ terminal Double FLOAT;
 terminal String STRING;
 terminal String IDENTIFIER;
 
-non terminal program, main, stmtlist, glbl_stmtlist, lcl_stmt, glbl_stmt, exprlist, expr, slice, dictlist, decllist, decl, type;
+non terminal program, main, stmtlist, glbl_stmtlist, lcl_stmt, glbl_stmt, exprlist, expr, slice, dictlist, decllist, decl, type, loop, loop_stmt;
 
 precedence nonassoc ELSE;
 precedence left IN;
@@ -70,15 +70,34 @@ lcl_stmt ::= IDENTIFIER:identifier ASSIGN exprlist:e SEMICOLON
     | PRINT expr:e SEMICOLON
     | IF LPARENS expr:e RPARENS THEN stmtlist:s FI
     | IF LPARENS expr:e RPARENS THEN stmtlist:s1 ELSE stmtlist:s2 FI
-    | LOOP stmtlist:s POOL
-    | BREAK expr:e SEMICOLON
-    | BREAK SEMICOLON
+    | LOOP loop:l POOL
     | RETURN expr:e SEMICOLON
     | RETURN SEMICOLON
     | QUESTION expr:e1 QUESTION IDENTIFIER:function LPARENS exprlist:e2 RPARENS SEMICOLON
     | QUESTION expr:e1 QUESTION IDENTIFIER:function LPARENS RPARENS SEMICOLON
     | TDEF IDENTIFIER:t LBRACE decllist:d RBRACE SEMICOLON
     | ALIAS type:t1 IDENTIFIER:t2 SEMICOLON
+    ;
+loop ::= loop_stmt:l
+    | loop:l1 loop_stmt:l2
+    ;
+loop_stmt ::= IDENTIFIER:identifier ASSIGN exprlist:e SEMICOLON
+    | IDENTIFIER:identifier COLON type:t SEMICOLON
+    | IDENTIFIER:identifier COLON type:t ASSIGN exprlist:e SEMICOLON
+    | IDENTIFIER:i1 DOT IDENTIFIER:i2 ASSIGN exprlist:e SEMICOLON
+    | READ IDENTIFIER:identifier SEMICOLON
+    | PRINT expr:e SEMICOLON
+    | IF LPARENS expr:e RPARENS THEN loop:s FI
+    | IF LPARENS expr:e RPARENS THEN loop:s1 ELSE loop:s2 FI
+    | LOOP loop:l POOL
+    | RETURN expr:e SEMICOLON
+    | RETURN SEMICOLON
+    | QUESTION expr:e1 QUESTION IDENTIFIER:function LPARENS exprlist:e2 RPARENS SEMICOLON
+    | QUESTION expr:e1 QUESTION IDENTIFIER:function LPARENS RPARENS SEMICOLON
+    | TDEF IDENTIFIER:t LBRACE decllist:d RBRACE SEMICOLON
+    | ALIAS type:t1 IDENTIFIER:t2 SEMICOLON
+    | BREAK SEMICOLON
+    | BREAK expr:e SEMICOLON
     ;
 exprlist ::= expr:e
     | exprlist:e1 COMMA expr:e2
