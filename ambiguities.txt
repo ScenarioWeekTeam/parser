@@ -23,3 +23,7 @@ Our Solution: Considering that a type definition with no fields has no functiona
 Paragraph: §12
 Problem: It is unclear the precedence of the operators
 Our solution: We have largely followed C style precedence ! has highest precdence followed by ^, then * / with equal precedence, + - also with equal, then < <= = != at equal precedence, :: then in with lowest. The precedence can be overrided by using brackets like in C.
+
+Paragraph: §20
+Problem: It is stated that main returns no value
+Our solution: In order to terminate the program early you may wish to use return so return would be valid with no value in main, however since most unix operating systems accept a value from program execution we will support using return with a value in main for compatibility as this is used extensively in unix to pipe results and such and the language would be highly restricted without it.
