@@ -29,7 +29,7 @@ Comment = {SingleLineComment} | {MultiLineComment}
 SingleLineComment = "#" {InputCharacter}* {LineTerminator}?
 MultiLineComment  = "/#" ~"#/"
 
-Identifier = [:jletter:] [:jletterdigit:]*
+Identifier = [a-zA-Z] ["_"a-zA-Z0-9]*
 
 Int = [0-9]+
 Rat = ([0-9]+"_")?[0-9]+\/[0-9]+
