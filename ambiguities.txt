@@ -16,22 +16,22 @@ Paragraph: §11
 Problem: It is not clear if both indices can be omitted for a sequence slice '[:]'.
 Our Solution: As it is supported in most other languages, our compiler will accept this syntax.
 
+Paragraph: §12
+Problem: It is unclear what precedence the operators have relative to each-other.
+Our solution: Due to the document citing C as a basis in multiple paragraphs (including §12 and §19), we have considered C style precedence to be appropriate to implement. '!' has highest precdence followed by '^', then '*' and '/' with equal precedence, followed by '+' and '-', then '<', '<=', '=' and '!=', and then finally the '::' with lowest precedence. In addition, like C, the precedence can be overridden by segregating parens.
+
 Paragraph: §13
 Problem: It is ambiguous whether an empty declaration_list when using 'tdef' is allowed.
-Our Solution: We accept empty type definitions as it may be desirable to have an equivalent of the empty tuple in haskell
-
-Paragraph: §12
-Problem: It is unclear the precedence of the operators
-Our solution: We have largely followed C style precedence ! has highest precdence followed by ^, then * / with equal precedence, + - also with equal, then < <= = != at equal precedence, :: then in with lowest. The precedence can be overrided by using brackets like in C.
-
-Paragraph: §20
-Problem: It is stated that main returns no value
-Our solution: In order to terminate the program early you may wish to use return so return would be valid with no value in main, however since most unix operating systems accept a value from program execution we will support using return with a value in main for compatibility as this is used extensively in unix to pipe results and such and the language would be highly restricted without it.
+Our Solution: Considering the functional language Haskell allows empty tuples, we think it would be a potential valid use case to accept empty type definitions as an equivalent.
 
 Paragraph: §13
-Problem: It is ambiguous if type definitions are accepted inside functions
-Our solution: We accept type definitions inside functions as you may want to have a type exposed only inside a specific function and not the others.
+Problem: It is ambiguous if type definitions are accepted inside function bodies.
+Our solution: We accept type definitions inside functions as you may want to have a type exposed only inside a specific scope.
 
 Paragraph: §14
-Problem: It is ambiguous if function definitions are accepted inside functions
-Our solution: We accept function definitions inside functions as you may want to have a function exposed only inside a specific function and not the others.
+Problem: It is ambiguous if function definitions are accepted inside function bodies.
+Our solution: We accept function definitions inside functions as you may want to approximate the anonymous functions of other languages within a limited scope.
+
+Paragraph: §20
+Problem: It is explicitly stated that main returns no value. However, many Unix and Unix-like operating systems accept return values from program execution for the purpose of piping, and other forms of program interaction. What is the appropriate choice?
+Our solution: In order to prevent the language from being limited - and behave with the piping interface - we have elected to allow main to return a value.
