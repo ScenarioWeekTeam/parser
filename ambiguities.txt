@@ -31,3 +31,7 @@ Our solution: In order to terminate the program early you may wish to use return
 Paragraph: §13
 Problem: It is ambiguous if type definitions are accepted inside functions
 Our solution: We accept type definitions inside functions as you may want to have a type exposed only inside a specific function and not the others.
+
+Paragraph: §14
+Problem: It is ambiguous if function definitions are accepted inside functions
+Our solution: We accept function definitions inside functions as you may want to have a function exposed only inside a specific function and not the others.
