@@ -35,3 +35,7 @@ Our solution: We accept function definitions inside functions as you may want to
 Paragraph: §20
 Problem: It is explicitly stated that main returns no value. However, many Unix and Unix-like operating systems accept return values from program execution for the purpose of piping, and other forms of program interaction. What is the appropriate choice?
 Our solution: In order to prevent the language from being limited - and behave with the piping interface - we have elected to allow main to return a value.
+
+Paragraph: §2, §13, §14
+Problem: It is stated that the program is composed of declarations including main, variable assignment is not listed as a declaration
+Our solution: To allow there to be global variables we will allow variable declaration including assignment, but we will not support variable assignment at a atime other than declaration outside a function as this would be ambiguous as to when it would execute.
