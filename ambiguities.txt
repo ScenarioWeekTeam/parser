@@ -18,7 +18,7 @@ Our Solution: As it is supported in most other languages, our compiler will acce
 
 Paragraph: §13
 Problem: It is ambiguous whether an empty declaration_list when using 'tdef' is allowed.
-Our Solution: Considering that a type definition with no fields has no functional purpose, our compiler rejects an empty declaration_list.
+Our Solution: We accept empty type definitions as it may be desirable to have an equivalent of the empty tuple in haskell
 
 Paragraph: §12
 Problem: It is unclear the precedence of the operators
@@ -27,3 +27,7 @@ Our solution: We have largely followed C style precedence ! has highest precdenc
 Paragraph: §20
 Problem: It is stated that main returns no value
 Our solution: In order to terminate the program early you may wish to use return so return would be valid with no value in main, however since most unix operating systems accept a value from program execution we will support using return with a value in main for compatibility as this is used extensively in unix to pipe results and such and the language would be highly restricted without it.
+
+Paragraph: §13
+Problem: It is ambiguous if type definitions are accepted inside functions
+Our solution: We accept type definitions inside functions as you may want to have a type exposed only inside a specific function and not the others.
