@@ -14,8 +14,12 @@ Our Solution: N/A - Considering CUP parsing alone cannot detect this failure of 
 
 Paragraph: §11
 Problem: It is not clear if both indices can be omitted for a sequence slice '[:]'.
-Our Solution: As it is supported in other languages, our compiler will accept this syntax.
+Our Solution: As it is supported in most other languages, our compiler will accept this syntax.
 
 Paragraph: §13
-Problem: It is ambiuous whether an empty declaration_list when using 'tdef' is allowed.
+Problem: It is ambiguous whether an empty declaration_list when using 'tdef' is allowed.
 Our Solution: Considering that a type definition with no fields has no functional purpose, our compiler rejects an empty declaration_list.
+
+Paragraph: §12
+Problem: It is unclear the precedence of the operators
+Our solution: We have largely followed C style precedence ! has highest precdence followed by ^, then * / with equal precedence, + - also with equal, then < <= = != at equal precedence, :: then in with lowest. The precedence can be overrided by using brackets like in C.
