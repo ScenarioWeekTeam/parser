@@ -18,7 +18,7 @@ Our Solution: As it is supported in most other languages, our compiler will acce
 
 Paragraph: §12
 Problem: It is unclear what precedence the operators have relative to each-other.
-Our solution: Due to the document citing C as a basis in multiple paragraphs (including §12 and §19), we have considered C style precedence to be appropriate to implement. '!' has highest precdence followed by '^', then '*' and '/' with equal precedence, followed by '+' and '-', then '<', '<=', '=' and '!=', and then finally the '::' with lowest precedence. In addition, like C, the precedence can be overridden by segregating parens.
+Our solution: Due to the document citing C as a basis in multiple paragraphs (including §12 and §19), we have largely considered C style precedence to be appropriate to implement. '!' has highest precdence followed by '^', then '*' and '/' with equal precedence, followed by '+' and '-', then '<', '<=', '=' and '!=', and then finally the '::' with lowest precedence. In addition, like C, the precedence can be overridden by segregating parens.
 
 Paragraph: §13
 Problem: It is ambiguous whether an empty declaration_list when using 'tdef' is allowed.
