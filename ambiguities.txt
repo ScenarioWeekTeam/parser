@@ -14,7 +14,7 @@ Our Solution: N/A - Considering CUP parsing alone cannot detect this failure of 
 
 Paragraph: §11
 Problem: It is not clear if both indices can be omitted for a sequence slice '[:]'.
-Our Solution: As it is supported in most other languages, our compiler will accept this syntax.
+Our Solution: As it is supported in most other languages which provide the ability to do sequence slicing, our compiler will accept this syntax.
 
 Paragraph: §12
 Problem: It is unclear what precedence the operators have relative to each-other.
