@@ -22,7 +22,7 @@ terminal Double FLOAT;
 terminal String STRING;
 terminal String IDENTIFIER;
 
-non terminal program, main, stmtlist, glbl_stmtlist, lcl_stmt, glbl_stmt, exprlist, expr, slice, dictlist, decllist, decl, type, loop, loop_stmt;
+non terminal program, main, stmtlist, glbl_stmtlist, lcl_stmt, glbl_stmt, exprlist, expr, slice, dictlist, decllist, decl, type, loop, loop_stmt, fdef, decl_stmt, decl_stmtlist;
 
 precedence nonassoc ELSE;
 precedence left IN;
@@ -43,7 +43,7 @@ program ::= main:m glbl_stmtlist:s
     | glbl_stmtlist:s main:m
     | main:m
     ;
-main ::= MAIN LBRACE stmtlist:s RBRACE SEMICOLON
+main ::= MAIN LBRACE fdef:s RBRACE SEMICOLON
     ;
 stmtlist ::= lcl_stmt:s
     | stmtlist:s1 lcl_stmt:s2
@@ -51,20 +51,32 @@ stmtlist ::= lcl_stmt:s
 glbl_stmtlist ::= glbl_stmt:s
     | glbl_stmtlist:s1 glbl_stmt:s2
     ;
-glbl_stmt ::= IDENTIFIER:identifier COLON type:t SEMICOLON
+decl_stmt ::= IDENTIFIER:identifier COLON type:t SEMICOLON
     | IDENTIFIER:identifier COLON type:t ASSIGN exprlist:e SEMICOLON
-    | IDENTIFIER:i1 DOT IDENTIFIER:i2 ASSIGN exprlist:e SEMICOLON
     | TDEF IDENTIFIER:t LBRACE decllist:d RBRACE SEMICOLON
     | TDEF IDENTIFIER:t LBRACE RBRACE SEMICOLON
-    | FDEF IDENTIFIER:identifier LPARENS decllist:p RPARENS LBRACE stmtlist:s RBRACE SEMICOLON
-    | FDEF IDENTIFIER:identifier LPARENS decllist:p RPARENS LBRACE stmtlist:s RBRACE COLON type:t SEMICOLON
-    | FDEF IDENTIFIER:identifier LPARENS RPARENS LBRACE stmtlist:s RBRACE SEMICOLON
-    | FDEF IDENTIFIER:identifier LPARENS RPARENS LBRACE stmtlist:s RBRACE COLON type:t SEMICOLON
+    | FDEF IDENTIFIER:identifier LPARENS decllist:p RPARENS LBRACE fdef:s RBRACE SEMICOLON
+    | FDEF IDENTIFIER:identifier LPARENS decllist:p RPARENS LBRACE fdef:s RBRACE COLON type:t SEMICOLON
+    | FDEF IDENTIFIER:identifier LPARENS RPARENS LBRACE fdef:s RBRACE SEMICOLON
+    | FDEF IDENTIFIER:identifier LPARENS RPARENS LBRACE fdef:s RBRACE COLON type:t SEMICOLON
     | ALIAS type:t1 IDENTIFIER:t2 SEMICOLON
     ;
-lcl_stmt ::= IDENTIFIER:identifier ASSIGN exprlist:e SEMICOLON
-    | IDENTIFIER:identifier COLON type:t SEMICOLON
+decl_stmtlist ::= decl_stmt:d
+    | decl_stmtlist:d1 decl_stmt:d2
+    ;
+fdef ::= decl_stmtlist:d stmtlist:s
+    | stmtlist:s
+    ;
+glbl_stmt ::= IDENTIFIER:identifier COLON type:t SEMICOLON
     | IDENTIFIER:identifier COLON type:t ASSIGN exprlist:e SEMICOLON
+    | TDEF IDENTIFIER:t LBRACE decllist:d RBRACE SEMICOLON
+    | TDEF IDENTIFIER:t LBRACE RBRACE SEMICOLON
+    | FDEF IDENTIFIER:identifier LPARENS decllist:p RPARENS LBRACE fdef:s RBRACE SEMICOLON
+    | FDEF IDENTIFIER:identifier LPARENS decllist:p RPARENS LBRACE fdef:s RBRACE COLON type:t SEMICOLON
+    | FDEF IDENTIFIER:identifier LPARENS RPARENS LBRACE fdef:s RBRACE SEMICOLON
+    | FDEF IDENTIFIER:identifier LPARENS RPARENS LBRACE fdef:s RBRACE COLON type:t SEMICOLON
+    ;
+lcl_stmt ::= IDENTIFIER:identifier ASSIGN exprlist:e SEMICOLON
     | IDENTIFIER:i1 DOT IDENTIFIER:i2 ASSIGN exprlist:e SEMICOLON
     | READ IDENTIFIER:identifier SEMICOLON
     | PRINT expr:e SEMICOLON
@@ -75,20 +87,11 @@ lcl_stmt ::= IDENTIFIER:identifier ASSIGN exprlist:e SEMICOLON
     | RETURN SEMICOLON
     | QUESTION expr:e1 QUESTION IDENTIFIER:function LPARENS exprlist:e2 RPARENS SEMICOLON
     | QUESTION expr:e1 QUESTION IDENTIFIER:function LPARENS RPARENS SEMICOLON
-    | TDEF IDENTIFIER:t LBRACE decllist:d RBRACE SEMICOLON
-    | TDEF IDENTIFIER:t LBRACE RBRACE SEMICOLON
-    | FDEF IDENTIFIER:identifier LPARENS decllist:p RPARENS LBRACE stmtlist:s RBRACE SEMICOLON
-    | FDEF IDENTIFIER:identifier LPARENS decllist:p RPARENS LBRACE stmtlist:s RBRACE COLON type:t SEMICOLON
-    | FDEF IDENTIFIER:identifier LPARENS RPARENS LBRACE stmtlist:s RBRACE SEMICOLON
-    | FDEF IDENTIFIER:identifier LPARENS RPARENS LBRACE stmtlist:s RBRACE COLON type:t SEMICOLON
-    | ALIAS type:t1 IDENTIFIER:t2 SEMICOLON
     ;
 loop ::= loop_stmt:l
     | loop:l1 loop_stmt:l2
     ;
 loop_stmt ::= IDENTIFIER:identifier ASSIGN exprlist:e SEMICOLON
-    | IDENTIFIER:identifier COLON type:t SEMICOLON
-    | IDENTIFIER:identifier COLON type:t ASSIGN exprlist:e SEMICOLON
     | IDENTIFIER:i1 DOT IDENTIFIER:i2 ASSIGN exprlist:e SEMICOLON
     | READ IDENTIFIER:identifier SEMICOLON
     | PRINT expr:e SEMICOLON
@@ -99,15 +102,8 @@ loop_stmt ::= IDENTIFIER:identifier ASSIGN exprlist:e SEMICOLON
     | RETURN SEMICOLON
     | QUESTION expr:e1 QUESTION IDENTIFIER:function LPARENS exprlist:e2 RPARENS SEMICOLON
     | QUESTION expr:e1 QUESTION IDENTIFIER:function LPARENS RPARENS SEMICOLON
-    | TDEF IDENTIFIER:t LBRACE decllist:d RBRACE SEMICOLON
-    | TDEF IDENTIFIER:t LBRACE RBRACE SEMICOLON
-    | ALIAS type:t1 IDENTIFIER:t2 SEMICOLON
     | BREAK SEMICOLON
     | BREAK expr:e SEMICOLON
-    | FDEF IDENTIFIER:identifier LPARENS decllist:p RPARENS LBRACE loop:s RBRACE SEMICOLON
-    | FDEF IDENTIFIER:identifier LPARENS decllist:p RPARENS LBRACE loop:s RBRACE COLON type:t SEMICOLON
-    | FDEF IDENTIFIER:identifier LPARENS RPARENS LBRACE loop:s RBRACE SEMICOLON
-    | FDEF IDENTIFIER:identifier LPARENS RPARENS LBRACE loop:s RBRACE COLON type:t SEMICOLON
     ;
 exprlist ::= expr:e
     | exprlist:e1 COMMA expr:e2
